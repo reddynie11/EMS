@@ -1,13 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/',(req,res)=>{
-    res.render('home.ejs');
-
-
-router.post('/', (req,res)=>{
-
-})
+router.use('/log',(req,res)=>{
+    res.json('Login Page');
 
 
 });

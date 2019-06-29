@@ -8,19 +8,19 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 var home = require('./routes/home');
-var login = require('./routes/login');
+var user = require('./routes/user');
+var logPage = require('./routes/logPage');
 
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', home);
-app.get('/login',login);
 
 
+app.use('/', home);
+app.use('/hr', user);
 
 
 
@@ -31,4 +31,6 @@ app.get('/login',login);
 
 
 
-app.listen(5000);
+
+
+app.listen(port);
