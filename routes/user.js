@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const hrData = require('../models/hrModel');
+const bcrypt = require('bcryptjs');
 
 router.get('/register',(req,res)=>{
     res.render('register.ejs');
@@ -14,15 +15,16 @@ router.post('/register', (req,res)=>{
     hrd.username = req.body.uid;
     hrd.email = req.body.email;
     hrd.password = req.body.pwd2;
-    
-    hrd.save((err)=>{
-        if(err) {throw err;}
-        else{console.log(hrd);}
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(hrd.password, salt, function(err, hash) {
+            hrd.password=hash;
+            hrd.save((err)=>{
+                if(err) {throw err;}
+                else{console.log(hrd);}
+            });
+        });
     });
-    //res.location('/login');
     res.redirect('/hr/login');
-
-
 });
 
 module.exports = router;
